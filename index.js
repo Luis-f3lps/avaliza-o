@@ -2,6 +2,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // --- LISTA DE TRABALHOS ---
     // Adicione, remova ou edite os nomes dos trabalhos nesta lista
+    
 const workList = [
     "PALAVRAS QUE CUIDAM: A MEDIAÇÃO AFETUOSA DA LITERATURA NA PEDIATRIA HOSPITALAR",
     "INFÂNCIA, RACISMO E EDUCAÇÃO: A CONSTRUÇÃO DE UMA ESCOLA INCLUSIVA",
