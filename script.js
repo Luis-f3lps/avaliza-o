@@ -83,7 +83,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         </tr>
                         <tr>
                             <td><b>Linguagem:</b> Linguagem adequada.</td>
-                            <td class="center">30</td>
+                            <td class="center">10</td>
                             <td></td>
                         </tr>
                         <tr>
@@ -93,7 +93,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         </tr>
                         <tr class="total-row">
                             <td><b>PONTUAÇÃO TOTAL</b></td>
-                            <td class="center"><b>120</b></td>
+                            <td class="center"><b>100</b></td>
                             <td></td>
                         </tr>
                     </tbody>
