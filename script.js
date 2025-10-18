@@ -53,6 +53,7 @@ const generatePdfBtn = document.getElementById('generatePdfBtn');
 
     // Função que cria o HTML para uma única página de avaliação
     function createPageHTML(title) {
+        // (Esta função está 100% correta, não mudei nada)
         return `
             <div class="page-container">
                 <h2>Ficha de Avaliação de Trabalho</h2>
@@ -110,48 +111,60 @@ const generatePdfBtn = document.getElementById('generatePdfBtn');
     generatePdfBtn.addEventListener('click', function() {
         
         generatePdfBtn.disabled = true;
-        generatePdfBtn.textContent = 'Gerando PDF...';
+        generatePdfBtn.textContent = 'Renderizando HTML (1/2)...'; // Mudei o texto para 2 etapas
+        console.log("Iniciando geração de HTML...");
 
-        // Cria o container
         const allPagesContainer = document.createElement('div');
         
-        // --- CORREÇÃO ---
-        // As 3 linhas que escondiam o container foram REMOVIDAS.
-        // O container será adicionado de forma visível.
-
-        // Preenche o container com todas as páginas
+        let pageCount = 0;
         workList.forEach(workName => {
             allPagesContainer.innerHTML += createPageHTML(workName);
+            pageCount++;
         });
+        
+        // --- MUDANÇA AQUI ---
+        // Log para você ver no console que TODAS as páginas foram criadas
+        console.log(`Total de ${pageCount} páginas HTML criadas no container.`);
+        console.log("Adicionando container ao <body>. A tela deve piscar.");
 
         // Adiciona o container ao corpo do documento (visivelmente)
         document.body.appendChild(allPagesContainer);
         
-        const options = {
-            margin:       0,
-            filename:     'avaliacoes_todos_trabalhos.pdf',
-            image:        { type: 'jpeg', quality: 0.98 },
-            html2canvas:  { scale: 2, useCORS: true },
-            jsPDF:        { unit: 'cm', format: 'a4', orientation: 'portrait' }
-        };
+        // --- MUDANÇA AQUI ---
+        // Adicionamos um 'setTimeout' para dar tempo ao navegador
+        // de desenhar o conteúdo antes de chamar o html2pdf.
+        setTimeout(function() {
+            
+            console.log("Iniciando captura do PDF (2/2)...");
+            generatePdfBtn.textContent = 'Gerando PDF (2/2)...';
 
-        // Gera o PDF a partir do container visível
-        html2pdf().from(allPagesContainer).set(options).save().then(() => {
-            // Callback de SUCESSO
-            generatePdfBtn.disabled = false;
-            generatePdfBtn.textContent = 'Gerar PDF de Todos os Trabalhos';
-            // Remove o container da tela
-            document.body.removeChild(allPagesContainer);
-        }).catch(err => {
-            // Callback de ERRO
-            console.error("Erro ao gerar PDF:", err);
-            generatePdfBtn.disabled = false;
-            generatePdfBtn.textContent = 'Gerar PDF de Todos os Trabalhos';
-            // Remove o container da tela em caso de erro também
-            if (document.body.contains(allPagesContainer)) {
-                document.body.removeChild(allPagesContainer);
-            }
-            alert("Ocorreu um erro ao gerar o PDF. Tente novamente.");
-        });
+            const options = {
+                margin:       0,
+                filename:     'avaliacoes_todos_trabalhos.pdf',
+                image:        { type: 'jpeg', quality: 0.98 },
+                html2canvas:  { scale: 2, useCORS: true },
+                jsPDF:        { unit: 'cm', format: 'a4', orientation: 'portrait' }
+            };
+
+            // Gera o PDF a partir do container visível
+            html2pdf().from(allPagesContainer).set(options).save().then(() => {
+                // Callback de SUCESSO
+                console.log("PDF gerado e salvo com sucesso!");
+                generatePdfBtn.disabled = false;
+                generatePdfBtn.textContent = 'Gerar PDF de Todos os Trabalhos';
+                document.body.removeChild(allPagesContainer); // Limpa a tela
+            }).catch(err => {
+                // Callback de ERRO
+                console.error("Erro ao gerar PDF:", err);
+                generatePdfBtn.disabled = false;
+                generatePdfBtn.textContent = 'Gerar PDF de Todos os Trabalhos';
+                if (document.body.contains(allPagesContainer)) {
+                    document.body.removeChild(allPagesContainer);
+                }
+                alert("Ocorreu um erro ao gerar o PDF. Tente novamente.");
+            });
+
+        }, 100); // 100 milissegundos de pausa. Isso deve resolver.
+
     });
 });
