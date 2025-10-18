@@ -1,3 +1,4 @@
+/* Importa uma fonte para melhor visualização */
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
 
 body {
@@ -25,7 +26,7 @@ body {
 .controls button {
     padding: 12px 25px;
     border: none;
-    background-color: #28a745; /* Cor verde para indicar uma ação principal */
+    background-color: #28a745;
     color: white;
     font-size: 18px;
     font-weight: bold;
@@ -43,9 +44,7 @@ body {
     cursor: not-allowed;
 }
 
-/* Estilos para cada PÁGINA que será gerada no PDF.
-  Este container não será visível na tela.
-*/
+
 .page-container {
     background-color: #fff;
     padding: 2cm;
@@ -53,9 +52,12 @@ body {
     height: 29.7cm;
     box-sizing: border-box;
     text-align: left;
-    
-    /* ESSENCIAL: Garante que cada ficha comece em uma nova página */
     page-break-after: always;
+    
+    /* --- CORREÇÃO ADICIONADA AQUI --- */
+    /* Isso garante que o rodapé com 'position: absolute' se posicione
+       corretamente em relação a esta página, e não à tela. */
+    position: relative; 
 }
 
 .page-container h2 {

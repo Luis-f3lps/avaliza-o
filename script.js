@@ -49,7 +49,7 @@ const workList = [
     "EDUCAÇÃO AMBIENTAL: COMO OS PROFESSORES ESTÃO TRABALHANDO O TEMA EM SALA DE AULA?",
     "PRATICA PEDAGOGICA E EDUCAÇAO AMBIENTAL: REFLEXOES NECESSARIAS",
 ];
-    const generatePdfBtn = document.getElementById('generatePdfBtn');
+const generatePdfBtn = document.getElementById('generatePdfBtn');
 
     // Função que cria o HTML para uma única página de avaliação
     function createPageHTML(title) {
@@ -109,37 +109,53 @@ const workList = [
     // Adiciona o evento de clique ao botão
     generatePdfBtn.addEventListener('click', function() {
         
-        // Desabilita o botão para evitar cliques múltiplos
         generatePdfBtn.disabled = true;
         generatePdfBtn.textContent = 'Gerando PDF...';
 
-        // Cria um elemento container temporário (que não será exibido na tela)
         const allPagesContainer = document.createElement('div');
         
-        // Itera sobre a lista de trabalhos e cria o HTML de cada página
+        // --- INÍCIO DA CORREÇÃO ---
+        // Estiliza o container para ficar invisível e fora da tela
+        // Isso é crucial para que o html2pdf possa ler os estilos CSS
+        allPagesContainer.style.position = 'absolute';
+        allPagesContainer.style.left = '-9999px';
+        allPagesContainer.style.top = '0';
+        // --- FIM DA CORREÇÃO ---
+        
         workList.forEach(workName => {
             allPagesContainer.innerHTML += createPageHTML(workName);
         });
 
-        // Configurações para a geração do PDF
+        // --- INÍCIO DA CORREÇÃO ---
+        // Adiciona o container ao corpo do documento
+        document.body.appendChild(allPagesContainer);
+        // --- FIM DA CORREÇÃO ---
+
         const options = {
-            margin:       0, // A margem já está no CSS (.page-container padding)
+            margin:       0,
             filename:     'avaliacoes_todos_trabalhos.pdf',
             image:        { type: 'jpeg', quality: 0.98 },
             html2canvas:  { scale: 2, useCORS: true },
             jsPDF:        { unit: 'cm', format: 'a4', orientation: 'portrait' }
         };
 
-        // Usa a biblioteca para gerar e salvar o PDF a partir do container com todas as páginas
         html2pdf().from(allPagesContainer).set(options).save().then(() => {
-            // Quando o PDF for salvo, reabilita o botão
             generatePdfBtn.disabled = false;
             generatePdfBtn.textContent = 'Gerar PDF de Todos os Trabalhos';
+            // --- INÍCIO DA CORREÇÃO ---
+            // Remove o container do corpo do documento após o PDF ser salvo
+            document.body.removeChild(allPagesContainer);
+            // --- FIM DA CORREÇÃO ---
         }).catch(err => {
-            // Em caso de erro, também reabilita o botão e mostra no console
             console.error("Erro ao gerar PDF:", err);
             generatePdfBtn.disabled = false;
             generatePdfBtn.textContent = 'Gerar PDF de Todos os Trabalhos';
+            // --- INÍCIO DA CORREÇÃO ---
+            // Remove o container também em caso de erro
+            if (document.body.contains(allPagesContainer)) {
+                document.body.removeChild(allPagesContainer);
+            }
+            // --- FIM DA CORREÇÃO ---
             alert("Ocorreu um erro ao gerar o PDF. Tente novamente.");
         });
     });
