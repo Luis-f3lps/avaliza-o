@@ -25,7 +25,7 @@ body {
 .controls button {
     padding: 12px 25px;
     border: none;
-    background-color: #28a745;
+    background-color: #007bff; /* Mudei a cor de volta */
     color: white;
     font-size: 18px;
     font-weight: bold;
@@ -35,7 +35,7 @@ body {
 }
 
 .controls button:hover {
-    background-color: #218838;
+    background-color: #0056b3;
 }
 
 .controls button:disabled {
@@ -43,7 +43,10 @@ body {
     cursor: not-allowed;
 }
 
-/* Estilos para CADA página que será gerada no PDF */
+/* Estilos para CADA página
+   Isto será usado tanto na tela (quando aparecer)
+   quanto no PDF final.
+*/
 .page-container {
     background-color: #fff;
     padding: 2cm;
@@ -51,14 +54,12 @@ body {
     height: 29.7cm;
     box-sizing: border-box;
     text-align: left;
-    page-break-after: always;
-    
-    /* ESSENCIAL para o rodapé funcionar */
     position: relative; 
-    
-    /* Adiciona uma margem para separar as páginas na tela */
     margin: 20px auto; 
     box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    
+    /* ESSENCIAL: Garante a quebra de página no PDF */
+    page-break-after: always; 
 }
 
 .page-container h2 {
@@ -116,4 +117,31 @@ body {
 
 .page-container .footer p {
     margin-bottom: 20px;
+}
+
+
+/* --- NOVA SEÇÃO ADICIONADA --- */
+/* Estilos que só se aplicam na hora de Imprimir / Salvar como PDF */
+@media print {
+    /* Esconde a interface (botões, título, etc) */
+    body > .container {
+        display: none;
+    }
+
+    /* Garante que o container das páginas de PDF ocupe a tela */
+    body > #pdf-all-pages {
+        display: block;
+    }
+    
+    /* Remove margens e sombras de tela */
+    .page-container {
+        margin: 0;
+        box-shadow: none;
+    }
+
+    /* Força o navegador a imprimir os fundos (tabelas) */
+    body {
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
 }
