@@ -112,25 +112,21 @@ const generatePdfBtn = document.getElementById('generatePdfBtn');
         generatePdfBtn.disabled = true;
         generatePdfBtn.textContent = 'Gerando PDF...';
 
+        // Cria o container
         const allPagesContainer = document.createElement('div');
         
-        // --- INÍCIO DA CORREÇÃO ---
-        // Estiliza o container para ficar invisível e fora da tela
-        // Isso é crucial para que o html2pdf possa ler os estilos CSS
-        allPagesContainer.style.position = 'absolute';
-        allPagesContainer.style.left = '-9999px';
-        allPagesContainer.style.top = '0';
-        // --- FIM DA CORREÇÃO ---
-        
+        // --- CORREÇÃO ---
+        // As 3 linhas que escondiam o container foram REMOVIDAS.
+        // O container será adicionado de forma visível.
+
+        // Preenche o container com todas as páginas
         workList.forEach(workName => {
             allPagesContainer.innerHTML += createPageHTML(workName);
         });
 
-        // --- INÍCIO DA CORREÇÃO ---
-        // Adiciona o container ao corpo do documento
+        // Adiciona o container ao corpo do documento (visivelmente)
         document.body.appendChild(allPagesContainer);
-        // --- FIM DA CORREÇÃO ---
-
+        
         const options = {
             margin:       0,
             filename:     'avaliacoes_todos_trabalhos.pdf',
@@ -139,23 +135,22 @@ const generatePdfBtn = document.getElementById('generatePdfBtn');
             jsPDF:        { unit: 'cm', format: 'a4', orientation: 'portrait' }
         };
 
+        // Gera o PDF a partir do container visível
         html2pdf().from(allPagesContainer).set(options).save().then(() => {
+            // Callback de SUCESSO
             generatePdfBtn.disabled = false;
             generatePdfBtn.textContent = 'Gerar PDF de Todos os Trabalhos';
-            // --- INÍCIO DA CORREÇÃO ---
-            // Remove o container do corpo do documento após o PDF ser salvo
+            // Remove o container da tela
             document.body.removeChild(allPagesContainer);
-            // --- FIM DA CORREÇÃO ---
         }).catch(err => {
+            // Callback de ERRO
             console.error("Erro ao gerar PDF:", err);
             generatePdfBtn.disabled = false;
             generatePdfBtn.textContent = 'Gerar PDF de Todos os Trabalhos';
-            // --- INÍCIO DA CORREÇÃO ---
-            // Remove o container também em caso de erro
+            // Remove o container da tela em caso de erro também
             if (document.body.contains(allPagesContainer)) {
                 document.body.removeChild(allPagesContainer);
             }
-            // --- FIM DA CORREÇÃO ---
             alert("Ocorreu um erro ao gerar o PDF. Tente novamente.");
         });
     });
