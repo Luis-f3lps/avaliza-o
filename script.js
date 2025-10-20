@@ -57,6 +57,27 @@ document.addEventListener('DOMContentLoaded', function() {
             <div class="page-container">
                 <h2>Ficha de Avaliação de Trabalho</h2>
                 <h3>Trabalho: <span>${title}</span></h3>
+                                                <table>
+                    <thead>
+                        <tr>
+                            <th>Pontos Obrigatorios</th>
+                            <th>Sim</th>
+                            <th>Não</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><b>Apresentou um produto?</b></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td><b>Pelo menos um dos autores estava presente?</b></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                    </tbody>
+                </table>
                 <table>
                     <thead>
                         <tr>
