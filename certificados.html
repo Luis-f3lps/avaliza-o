@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerador de Certificados</title>
+    <link rel="stylesheet" href="certificados.css">
+</head>
+<body>
+
+  <h1>Gerador de Certificados</h1>
+    <p>Adicione os nomes na variável <strong>participantList</strong> no código JS.</p>
+    <button id="generatePdfBtn">Gerar PDF de Todos os Certificados</button>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            
+            const generatePdfBtn = document.getElementById('generatePdfBtn');
+            let allPagesContainer = null; // Variável para guardar o container
+
+            // =============================================================
+            // 👉 TROQUE AQUI a lista de nomes dos participantes
+            // =============================================================
+const nameList = [
+    "Tatianne Marques",
+    "Luis Gustavo Barbosa Santiago",
+    "Letícia Grazielly Silva Campos",
+    "Wagner Patricio de Sousa Junior",
+    "Diego da Cunha Carvalho",
+    "Evane Celestino Silveira",
+    "Frederico Ventura Batista",
+    "Gêysa de Cássia Cardoso",
+    "Isis",
+    "Karina Costa",
+    "Leonardo Humberto Guimarães Silva",
+    "Lílian Gleisia Alves dos Santos",
+    "Marília Dutra Massad",
+    "Patricia Nery Silva Souza",
+    "Renata Xavier Castro",
+    "Sileimar Maria Lelis",
+    "Valéria Magro Octaviano Bernis",
+    "Vanessa Paulino da Cruz Vieira",
+    "Alisson João Barbosa dos Santos",
+    "BIANCA SANTOS IERVOLINO",
+    "Bruna Aparecida Barbosa",
+    "Bruna Emanuelle Neves",
+    "Caio castro pena",
+    "Carol Lorrany Dias de Souza",
+    "Daiane Moreira Gomes",
+    "Francielle Nunes",
+    "Giovanni Xavier Guimarães",
+    "Graziele Santos da Costa",
+    "Gustavo Guilherme da Cruz Souza",
+    "Ingrid Beatriz Ferreira da Silva",
+    "Karina de Souza Pereira",
+    "Karen Karine Vieira dos Santos",
+    "Maira Castro",
+    "Marco Antônio de Menezes",
+    "Mylena Mendes Corrêa",
+    "Rosane Gomes da Silva Andra",
+    "Tauany Teixeira de Almeida",
+    "Caio Henriques Sica Lamas"
+];
+
+            /**
+             * Função que cria o HTML para UMA página de certificado.
+             * Esta é a função que eu modifiquei para você.
+             * @param {string} title - O nome do participante (vem da participantList)
+             */
+            function createPageHTML(title) {
+                // Aqui está o seu texto, formatado em HTML
+                return `
+                    <div class="certificate-page">
+                        <div class="certificate-content">
+                            <h2>CERTIFICADO DE PARTICIPAÇÃO</h2>
+                            
+                            <p class="certificate-text">
+                                Certificamos que <strong>${title}</strong>, participou da equipe de organização
+                                do evento III Semana Nacional de Ciência e Tecnologia- IFNMG Campus Salinas
+                                realizado entre os dias 22/10/2025 e 24/10/2025, na cidade de Salinas,
+                                contabilizando carga horária total de 40 horas.
+                            </p>
+                            
+                            <p class="signature-placeholder">${title}</p>
+
+                        </div>
+                    </div>
+                `;
+            }
+
+            // Função para limpar a tela depois da impressão (reutilizada do seu código)
+            function afterPrint() {
+                console.log("Evento 'afterprint' disparado. Limpando a tela.");
+                // Remove o container das páginas
+                if (allPagesContainer) {
+                    document.body.removeChild(allPagesContainer);
+                    allPagesContainer = null;
+                }
+                // Reabilita o botão
+                generatePdfBtn.disabled = false;
+                generatePdfBtn.textContent = 'Gerar PDF de Todos os Certificados';
+                
+                // Remove o 'listener' para não acumular
+                window.removeEventListener('afterprint', afterPrint);
+            }
+
+            // Adiciona o evento de clique ao botão (lógica principal reutilizada)
+            generatePdfBtn.addEventListener('click', function() {
+                
+                generatePdfBtn.disabled = true;
+                generatePdfBtn.textContent = 'Preparando para impressão...';
+                console.log("Gerando HTML das páginas...");
+
+                // Cria o container que vai guardar todas as páginas
+                allPagesContainer = document.createElement('div');
+                allPagesContainer.id = 'pdf-all-pages'; // ID para o CSS
+                
+                // Preenche o container com todas as páginas
+                // 👉 Mudei de 'workList' para 'participantList'
+                participantList.forEach(participantName => {
+                    allPagesContainer.innerHTML += createPageHTML(participantName);
+                });
+
+                // Adiciona o container ao corpo do documento
+                document.body.appendChild(allPagesContainer);
+                console.log("Páginas adicionadas ao DOM. Chamando window.print().");
+
+                // Adiciona o 'listener' que vai limpar a tela DEPOIS
+                window.addEventListener('afterprint', afterPrint);
+
+                // Chama a janela de impressão do navegador
+                // É AQUI QUE VOCÊ DEVE ESCOLHER "SALVAR COMO PDF"
+                window.print();
+            });
+        });
+    </script>
+
+</body>
+</html>
+
+</body>
+</html>
