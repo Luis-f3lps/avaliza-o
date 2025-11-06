@@ -23,48 +23,80 @@
             // =============================================================
             // 👉 TROQUE AQUI a lista de nomes dos participantes
             // =============================================================
-const participantNames = [
-  "Lays Araújo Nery",   
-  "Jhonatan Azevedo Santos",
-  "Maria Isabel dos Santos",
-  "Carlos Eugênio ferreira de Sá",
-  "Bianca Guimarães Costa",
-  "Yasmin Carolline",
-  "Amanda Rodrigues",
-  "Jorge Barbosa Solis",
-  "Fabricio Diniz Pimenta",
-  "Keitlany Cristiny Seuary Rodrigues",
-  "Marcos Yury Serrano Nascimento",
-  "Victor Eduardo Roberta Bergetti Romalho",
-  "Bernardo Cardoso Freire",
-  "Brena Henrique Rodrigues Rocha",
-  "David Santos Freire",
-  "Gabriel Rodrigues de Oliveira",
-  "Rosilayne Ferreira Freitas"
+// Eu renomeei para 'participants' (plural) para ficar mais claro
+const participants = [
+  { 
+    name: "Lays Araújo Nery", 
+    lecture: "NOME DA ATIVIDADE DA LAYS" // <== Você precisa preencher isso
+  },
+  { 
+    name: "Joaquina Aparecida Nobre da Silva", 
+    lecture: "Abertura oficial do Evento" 
+  },
+  { 
+    name: "Dr. Gabriel Mendes Santos", 
+    lecture: "Um breve histórico da VETBRAS" 
+  },
+  { 
+    name: "Profª Drª. Adalgiza de Rezende", 
+    lecture: "Manejo Nutricional de Equinos" 
+  },
+  { 
+    name: "Júnior Costa", 
+    lecture: "Como Empreender com Sucesso na Pecuária Leiteira" 
+  },
+  { 
+    name: "Dr. Rafael Henrique Pereira dos Reis", 
+    lecture: "Como Otimizar a Produção Animal por meio do Manejo de Pastagens?" 
+  },
+  { 
+    name: "Dr. José Neuman Miranda Neiva", 
+    lecture: "Suplementação de Bovinos a Pasto: Custo ou Investimento?" 
+  },
+  { 
+    name: "Me. Everton Tadeu Negrão Pereira", 
+    lecture: "Atuação do Médico Veterinário no Mercado de Trabalho" 
+  },
+  { 
+    name: "Dr. Carlos Antônio de Carvalho Fernandes", 
+    lecture: "Produção de Embriões Bovinos In Vitro: Aplicações e Impactos no Mercado" 
+  },
+  { 
+    name: "Dr. Rodrigo Brunner", 
+    lecture: "A Evolução da TULIPA AGROPECUÁRIA" 
+  },
+  { 
+    name: "Prof. Dr. Wagner Azis Garcia de Araújo", 
+    lecture: "Tipificação e Análise de Carcaça Suína" 
+  },
+  { 
+    name: "Patrícia de Azevedo Castelo Branco do Vale", 
+    lecture: "Inteligência Artificial na Produção Animal" 
+  }
 ];
 
             /**
              * Função que cria o HTML para UMA página de certificado.
              * Esta é a função que eu modifiquei para você.
-             * @param {string} title - O nome do participante (vem da participantList)
-             */
-            function createPageHTML(title) {
-                // Aqui está o seu texto, formatado em HTML
-                return `
-                    <div class="certificate-page">
-                        <div class="certificate-content">
+* @param {object} participant - O objeto contendo { name: "...", lecture: "..." }
+ */
+function createPageHTML(participant) {
+    // Agora acessamos as propriedades 'name' e 'lecture' do objeto
+    return `
+        <div class="certificate-page">
+            <div class="certificate-content">
 </br></br>
 
-                            <p class="certificate-text">
-                                Certificamos que <strong>${title}</strong>, participou com êxito da atividade “Oficina Beach Tenis II” realizada durante o III Semana Nacional de Ciência e Tecnologia - IFNMG Campus Salinas, contabilizando carga horária total de 02:00 horas.
-                            </p>
-                            
-                            <p class="signature-placeholder"> Salinas - MG, 28/10/2025 </p>
+                <p class="certificate-text">
+                    Certificamos que <strong>${participant.name}</strong>, ministrou a atividade ${participant.lecture}, realizada durante o III Semana Nacional de Ciência e Tecnologia - IFNMG Campus Salinas.
+                </p>
+                
+                <p class="signature-placeholder"> Salinas - MG, 28/10/2025 </p>
 
-                        </div>
-                    </div>
-                `;
-            }
+            </div>
+        </div>
+    `;
+}
 
             // Função para limpar a tela depois da impressão (reutilizada do seu código)
             function afterPrint() {
@@ -95,7 +127,7 @@ const participantNames = [
 
                 // Preenche o container com todas as páginas
                 // 👉 Mudei de 'workList' para 'participantList'
-                participantNames.forEach(name => {
+                participants.forEach(name => {
                     allPagesContainer.innerHTML += createPageHTML(name);
                 });
 
