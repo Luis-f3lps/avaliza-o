@@ -26,7 +26,7 @@
 
         .certificate-page {
 
-            background-image: url('certificado\fundo.png');
+            background-image: url('fundo.png');
             
             background-size: cover; /* Faz a imagem cobrir a página inteira */
             background-position: center;
