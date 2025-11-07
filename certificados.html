@@ -18,58 +18,45 @@
         document.addEventListener('DOMContentLoaded', () => {
 
             const generatePdfBtn = document.getElementById('generatePdfBtn');
-            let allPagesContainer = null; // Variável para guardar o container
+            let allPagesContainer = null; 
 
-            // =============================================================
-            // 👉 TROQUE AQUI a lista de nomes dos participantes
-            // =============================================================
-// Eu renomeei para 'participants' (plural) para ficar mais claro
 const participants = [
-  { 
-    name: "Lays Araújo Nery", 
-    lecture: "NOME DA ATIVIDADE DA LAYS" // <== Você precisa preencher isso
-  },
+  { name: "Villiar Alves Camargo", lecture: "Oficina Haicai" },
+    { name: "Villiar Alves Camargo", lecture: "Oficina Haicai" },
 
-  { 
-    name: "Dr. Gabriel Mendes Santos", 
-    lecture: "Um breve histórico da VETBRAS" 
-  },
-  { 
-    name: "Profª Drª. Adalgiza de Rezende", 
-    lecture: "Manejo Nutricional de Equinos" 
-  },
-  { 
-    name: "Júnior Costa", 
-    lecture: "Como Empreender com Sucesso na Pecuária Leiteira" 
-  },
-  { 
-    name: "Dr. Rafael Henrique Pereira dos Reis", 
-    lecture: "Como Otimizar a Produção Animal por meio do Manejo de Pastagens?" 
-  },
-  { 
-    name: "Dr. José Neuman Miranda Neiva", 
-    lecture: "Suplementação de Bovinos a Pasto: Custo ou Investimento?" 
-  },
-  { 
-    name: "Me. Everton Tadeu Negrão Pereira", 
-    lecture: "Atuação do Médico Veterinário no Mercado de Trabalho" 
-  },
-  { 
-    name: "Dr. Carlos Antônio de Carvalho Fernandes", 
-    lecture: "Produção de Embriões Bovinos In Vitro: Aplicações e Impactos no Mercado" 
-  },
-  { 
-    name: "Dr. Rodrigo Brunner", 
-    lecture: "A Evolução da TULIPA AGROPECUÁRIA" 
-  },
-  { 
-    name: "Prof. Dr. Wagner Azis Garcia de Araújo", 
-    lecture: "Tipificação e Análise de Carcaça Suína" 
-  },
-  { 
-    name: "Patrícia de Azevedo Castelo Branco do Vale", 
-    lecture: "Inteligência Artificial na Produção Animal" 
-  }
+  { name: "Catiany Aparecida Pereira Viana", lecture: "Oficina Haicai" },
+  { name: "Rudá Mahayana Cordeiro de Barros", lecture: "Oficina Haicai" },
+  { name: "Jenniffer Victória Hillary dos Reis Mendes", lecture: "Oficina Haicai" },
+  { name: "Raissa Freire Silva", lecture: "Oficina Haicai" },
+  { name: "Hjuana Vitória Campos Bárbara", lecture: "Oficina Peer Instruction" },
+  { name: "Paulo Neris Costa Cruz", lecture: "Oficina Peer Instruction" },
+  { name: "Laisson Soares Silva", lecture: "Oficina Peer Instruction" },
+  { name: "Gleiton Marcos Evangelista", lecture: "Oficina Peer Instruction" },
+  { name: "Antonio Paulo Paulino da Silva", lecture: "Oficina Peer Instruction" },
+  { name: "Renan Celestino Ferreira", lecture: "Oficina de Construção de Foguetes" },
+  { name: "Icaro Kaio Siqueira Batista", lecture: "Oficina de Construção de Foguetes" },
+  { name: "Yasmim Rodrigues Santos", lecture: "A água na cosmogonia afro-indígena" },
+  { name: "Stefhany Vitória Fernandes Pereira", lecture: "A água na cosmogonia afro-indígena" },
+  { name: "Ana Lívia Guin Calixto", lecture: "A água na cosmogonia afro-indígena" },
+  { name: "Thafne Vitoria Vieira Carvalho", lecture: "A água na cosmogonia afro-indígena" },
+  { name: "Maria Clara Santos Ornelas", lecture: "A água na cosmogonia afro-indígena" },
+  { name: "Tailon da Costa Araújo", lecture: "A água na cosmogonia afro-indígena" },
+  { name: "Ana Julia Brito da Costa", lecture: "Palestra de Peer Instruction" },
+  { name: "Geraldo Magela Cardoso", lecture: "Palestra de Peer Instruction" },
+  { name: "Laisson Soares Silva", lecture: "Palestra de Peer Instruction" },
+  { name: "Meirivan B.O. Ferreira", lecture: "Palestra de Peer Instruction" },
+  { name: "Yara Alves Pinheiro", lecture: "Palestra de Peer Instruction" },
+  { name: "Gleiton Marcos Evangelista", lecture: "Palestra de Peer Instruction" },
+  { name: "Ana Maria Ferreira Santos", lecture: "Documentários" },
+  { name: "Caio da Silva Viana", lecture: "Documentários" },
+  { name: "Luiz Felipe Pereira de Lima", lecture: "Documentários" },
+  { name: "Wender Alves da Silla", lecture: "Documentários" },
+  { name:"Mateus Henrique de Jesus Oliveira", lecture: "Documentários" },
+  { name: "Sebastiao Soares Barbosa", lecture: "Documentários" },
+  { name: "Maria Eva Freire de Alkimim", lecture: "Documentários" },
+  { name: "Kaylany Vitória Ferreira", lecture: "Documentários" },
+  { name: "Thais de Souza Vieira", lecture: "Documentários" },
+  { name: "Hellen Cristina Mendes Dias", lecture: "Documentários" }
 ];
 
             /**
@@ -85,7 +72,7 @@ function createPageHTML(participant) {
 </br></br>
 
                 <p class="certificate-text">
-                    Certificamos que <strong>${participant.name}</strong>, ministrou a palestra <strong>${participant.lecture}</strong>, realizada durante o <strong>III SIMPÓSIO DO PROGRAMA DE PÓS-GRADUAÇÃO EM MEDICINA VETERINÁRIA/PPGVET</strong>, que ocorreu entre os dias 01 e 03 de outubro de 2025, na Cidade de Salinas, Minas Gerais.
+                    Certificamos que <strong>${participant.name}</strong>, participou da atividade <strong>${participant.lecture}</strong>, realizada durante o <strong>III SIMPÓSIO DO PROGRAMA DE PÓS-GRADUAÇÃO EM MEDICINA VETERINÁRIA/PPGVET</strong>, que ocorreu entre os dias 01 e 03 de outubro de 2025, na Cidade de Salinas, Minas Gerais. Carga horária da atividade: 02:00.
                 </p>
                 
                 <p class="signature-placeholder"> Salinas - MG, 06/11/2025 </p>
