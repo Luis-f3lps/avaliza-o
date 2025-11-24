@@ -1,0 +1,103 @@
+/* Estilos para a tela (preview) */
+        body {
+            font-family: sans-serif;
+            background-color: #F0F0F0; /* Fundo cinza para ver as 'páginas' */
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        #generatePdfBtn {
+            font-size: 16px;
+            padding: 12px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-bottom: 20px;
+        }
+        #generatePdfBtn:disabled {
+            background-color: #AAA;
+            cursor: not-allowed;
+        }
+
+        .certificate-page {
+
+            background-image: url('1749934724certificado.png');
+            
+            background-size: cover; /* Faz a imagem cobrir a página inteira */
+            background-position: center;
+            background-repeat: no-repeat;
+
+            width: 297mm; 
+            height: 210mm;
+            margin: 20px auto;
+            border: 1px solid #CCC;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 2cm; /* Margens do certificado */
+            box-sizing: border-box; /* Garante que o padding não aumente o tamanho */
+            position: relative;
+            font-family: 'Times New Roman', Times, serif;
+            color: #000;
+        }
+        
+        .certificate-content h2 {
+            font-size: 28pt;
+            margin-bottom: 40px;
+        }
+
+        .certificate-content .certificate-text {
+            font-size: 16pt;
+            line-height: 1.6;
+            text-align: justify; /* Mais formal para certificados */
+            margin-bottom: 60px;
+        }
+        
+        .certificate-content .signature-placeholder {
+            font-size: 16pt;
+            font-weight: bold;
+            margin-top: 50px;
+        }
+
+
+        @media print {
+            /* Esconde tudo, exceto as páginas do PDF */
+            body > *:not(#pdf-all-pages) {
+                display: none;
+            }
+
+            /* Garante que o container ocupe a tela de impressão */
+            #pdf-all-pages {
+                display: block;
+                margin: 0;
+                padding: 0;
+            }
+
+            .certificate-page {
+                /* ISSO É CRUCIAL para o Chrome/Edge imprimirem a imagem de fundo */
+                /* Reseta os estilos de 'preview' da tela */
+                border: none;
+                box-shadow: none;
+                margin: 0;
+                
+                /* Força o tamanho A4 Paisagem (landscape) */
+                width: 297mm;
+                height: 210mm;
+                
+                /* Garante que cada certificado fique em uma página */
+                page-break-after: always;
+            }
+
+            /* Evita uma página em branco no final */
+            .certificate-page:last-child {
+                page-break-after: auto;
+            }
+        }

@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerador de Certificados</title>
+    <link rel="stylesheet" href="certificados2.css">
+</head>
+
+<body>
+
+    <h1>Gerador de Certificados</h1>
+    <p>Adicione os nomes na variável <strong>participantList</strong> no código JS.</p>
+    <button id="generatePdfBtn">Gerar PDF de Todos os Certificados</button>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+
+            const generatePdfBtn = document.getElementById('generatePdfBtn');
+            let allPagesContainer = null; 
+
+const participants = [
+  { name: "Villiar Alves Camargo"},
+  { name: "Rogerio Mendes Murta" },
+  { name: "Leilson Alves Dos Santos" },
+  { name: "Vanessa Paulino da Cruz Vieira" },
+  { name: "Anibal Souza Felipe da Silva" },
+  { name: "Ana Paula Quintino Rocha" },
+  { name: "Paulo Eduardo Ferreira dos Santos" },
+  { name: "Larissa Duarte Araújo Pereira" },
+  { name: "Gustavo Rodrigues Morgado" },
+  { name: "João Antônio Motta Neto" },
+  { name: "Genilce Ferreira dos Santos" },
+  { name: "Juliana Rocha de Meira Pires" },
+  { name: "Hérika Maria Silveira Ruas" },
+  { name: "Jussara Barros Silva" },
+  { name: "Sergio Renato Oliveira" },
+  { name: "Tattiane Gomes Costa" },
+  { name: "Alvaro Diego Soares Mota" },
+  { name: "Aline Sardinha Lopes Sá" },
+  { name: "Julio Cesar Oliveira Dias" },
+  { name: "Flavia Almeida Diniz" },
+  { name: "Ricardo Tadeu Barbosa" },
+  { name: "Pablo Florentino Fróes Couto" },
+  { name: "Sérgio Fernandes Ferreira" },
+  { name: "Susi Cristina dos Santos Guimarães Martins" },
+  { name: "Tatianne Marques" }
+];
+
+            /**
+             * Função que cria o HTML para UMA página de certificado.
+             * Esta é a função que eu modifiquei para você.
+* @param {object} participant - O objeto contendo { name: "...", lecture: "..." }
+ */
+function createPageHTML(participant) {
+    // Agora acessamos as propriedades 'name' e 'lecture' do objeto
+    return `
+        <div class="certificate-page">
+            <div class="certificate-content">
+</br></br>
+
+                <p class="certificate-text">
+                    Certificamos que <strong>${participant.name}</strong>, participou como avaliador do III SIMPÓSIO DO PROGRAMA DE PÓS-GRADUAÇÃO EM MEDICINA VETERINÁRIA,  que ocorreu entre os dias 01 e 03 de outubro de 2025, na Cidade de Salinas, Minas Gerais.
+                </p>
+                
+                <p class="signature-placeholder"> Salinas - MG, 24/11/2025 </p>
+
+            </div>
+        </div>
+    `;
+}
+
+            // Função para limpar a tela depois da impressão (reutilizada do seu código)
+            function afterPrint() {
+                console.log("Evento 'afterprint' disparado. Limpando a tela.");
+                // Remove o container das páginas
+                if (allPagesContainer) {
+                    document.body.removeChild(allPagesContainer);
+                    allPagesContainer = null;
+                }
+                // Reabilita o botão
+                generatePdfBtn.disabled = false;
+                generatePdfBtn.textContent = 'Gerar PDF de Todos os Certificados';
+
+                // Remove o 'listener' para não acumular
+                window.removeEventListener('afterprint', afterPrint);
+            }
+
+            // Adiciona o evento de clique ao botão (lógica principal reutilizada)
+            generatePdfBtn.addEventListener('click', function () {
+
+                generatePdfBtn.disabled = true;
+                generatePdfBtn.textContent = 'Preparando para impressão...';
+                console.log("Gerando HTML das páginas...");
+
+                // Cria o container que vai guardar todas as páginas
+                allPagesContainer = document.createElement('div');
+                allPagesContainer.id = 'pdf-all-pages'; // ID para o CSS
+
+                // Preenche o container com todas as páginas
+                // 👉 Mudei de 'workList' para 'participantList'
+                participants.forEach(name => {
+                    allPagesContainer.innerHTML += createPageHTML(name);
+                });
+
+                // Adiciona o container ao corpo do documento
+                document.body.appendChild(allPagesContainer);
+                console.log("Páginas adicionadas ao DOM. Chamando window.print().");
+
+                // Adiciona o 'listener' que vai limpar a tela DEPOIS
+                window.addEventListener('afterprint', afterPrint);
+
+                // Chama a janela de impressão do navegador
+                // É AQUI QUE VOCÊ DEVE ESCOLHER "SALVAR COMO PDF"
+                window.print();
+            });
+        });
+    </script>
+
+</body>
+
+</html>
+
+</body>
+
+</html>
